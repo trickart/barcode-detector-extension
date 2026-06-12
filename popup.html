@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        width: 320px;
+        margin: 0;
+        padding: 12px;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      h1 {
+        font-size: 13px;
+        margin: 0 0 8px;
+        font-weight: 600;
+      }
+      .status {
+        color: #5f6368;
+      }
+      .error {
+        color: #d93025;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .item {
+        border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+        border-radius: 8px;
+        padding: 8px 10px;
+        margin-bottom: 8px;
+      }
+      .format {
+        display: inline-block;
+        font-size: 11px;
+        color: #1a73e8;
+        background: color-mix(in srgb, #1a73e8 12%, transparent);
+        border-radius: 4px;
+        padding: 1px 6px;
+        margin-bottom: 6px;
+      }
+      .value {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        white-space: pre-wrap;
+        word-break: break-all;
+        margin: 0 0 8px;
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+        border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+        background: transparent;
+        color: inherit;
+        border-radius: 6px;
+        padding: 4px 10px;
+      }
+      button:hover {
+        background: color-mix(in srgb, currentColor 8%, transparent);
+      }
+      a.link {
+        word-break: break-all;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Barcode content</h1>
+    <div id="content" class="status">Loading…</div>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Barcode Content Viewer",
+  "version": "1.0.0",
+  "description": "Right-click a barcode image on a web page to show its content from the context menu.",
+  "permissions": ["contextMenus", "offscreen", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Barcode content",
+    "default_icon": {
+      "16": "icon.png",
+      "32": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}

@@ -29,3 +29,5 @@ Temporary Items
 
 # Build artifacts
 barcode-detector-extension.zip
+node_modules/
+dist/

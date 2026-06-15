@@ -1,19 +1,24 @@
 # Makefile for building the Chrome Web Store distribution package.
 
 ZIP := barcode-detector-extension.zip
+DIST := dist
 
-# Files to include in the distribution package.
-SRC := manifest.json background.js offscreen.html offscreen.js popup.html popup.js icon.png
+.PHONY: build dist zip clean
 
-.PHONY: build clean
+# Build the distribution zip.
+build: zip
 
-# Build the distribution zip (excludes macOS .DS_Store files).
-build: $(ZIP)
+# Bundle the extension into ./dist (offscreen.js + WASM + static files).
+dist:
+	npm install
+	npm run build
 
-$(ZIP): $(SRC)
-	rm -f $@
-	zip -r $@ $(SRC) -x '*.DS_Store'
+# Package the built ./dist directory into the upload zip.
+zip: dist
+	rm -f $(ZIP)
+	cd $(DIST) && zip -r ../$(ZIP) . -x '*.DS_Store'
 
-# Remove the generated zip.
+# Remove generated artifacts.
 clean:
 	rm -f $(ZIP)
+	rm -rf $(DIST)

@@ -1,6 +1,20 @@
 // Offscreen document: performs the actual barcode detection.
 // BarcodeDetector is not available in a service worker, so it runs in this
 // document, which has a DOM.
+//
+// We import the barcode-detector polyfill, which installs a WASM-backed
+// BarcodeDetector on globalThis ONLY when the browser has no native one
+// (e.g. Chrome on Linux). On platforms with a native BarcodeDetector
+// (macOS / Windows / Android) the native implementation is used as-is and
+// the WASM module is never loaded.
+import { setZXingModuleOverrides } from "barcode-detector/polyfill";
+
+// When the WASM fallback is used, load the .wasm bundled inside the extension
+// instead of fetching it from the network (which is not possible here).
+setZXingModuleOverrides({
+  locateFile: (path, prefix) =>
+    path.endsWith(".wasm") ? chrome.runtime.getURL(path) : prefix + path
+});
 
 let detector = null;
 
@@ -21,11 +35,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 });
 
 async function detect(srcUrl) {
-  if (!("BarcodeDetector" in globalThis)) {
-    throw new Error(
-      "The BarcodeDetector API is not available in this browser / OS."
-    );
-  }
+  // BarcodeDetector is guaranteed to exist here: either the browser's native
+  // implementation, or the WASM-backed polyfill installed on import above.
 
   // Thanks to host_permissions, the extension page can fetch cross-origin images
   const res = await fetch(srcUrl);
